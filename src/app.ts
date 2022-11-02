@@ -3,33 +3,35 @@ import express, { Request, Response, NextFunction } from 'express';
 import path from 'path';
 import cookieParser from 'cookie-parser';
 import logger from 'morgan';
-import cors from 'cors';
-import dotenv from 'dotenv';
+import db from "./database/mySqliteDB";
 
+db.sync().then(() => {
+  console.log('Database connected successfully')
+}).catch(err => {
+  console.log(err)
+})
 
-dotenv.config();
-
-import indexRouter from './routes/index'
-
+import usersRouter from './routes/users';
+import hotelsRouter from './routes/listing';
 
 const app = express();
-app.use(cors());
 
 // view engine setup
-app.set('views', path.join(__dirname, 'views'));
+app.set('views', path.join(__dirname, "..", 'views'));
 app.set('view engine', 'ejs');
 
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(express.static(path.join(__dirname, 'public')));
+app.use(express.static(path.join(__dirname, '../public')));
+// app.use(express.static(path.join(__dirname, 'public/Login_v1/')));
 
-app.use('/', indexRouter);
-
+app.use('/users', usersRouter);
+app.use('/hotels', hotelsRouter);
 
 // catch 404 and forward to error handler
-app.use(function(req, res, next) {
+app.use(function(req: Request, res: Response, next: NextFunction) {
   next(createError(404));
 });
 

@@ -27,12 +27,12 @@ const storage = multer.diskStorage({
 });
 
 //Check File Type
-function checkFileType(file, cb) {
+function checkFileType(file:any, cb:any) {
     //Allowed ext
     const filetypes =/jpeg|jpg|png|gif/;
     //Check ext
     const extname = filetypes.test(path.extname(file.originalname).toLowerCase());
-    //Check mine
+    //Check mime
 const mimetype = filetypes.test(file.mimetype);
 
 if (mimetype && extname) {
@@ -51,4 +51,4 @@ const upload = multer({
     },
 });
 
-module.exports = { upload, fileSizeLimitErrorHandler };
+exports = { upload, fileSizeLimitErrorHandler };

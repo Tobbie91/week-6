@@ -1,28 +1,15 @@
 import express from 'express';
+import {auth} from "../middleware/auth"
 const router = express.Router();
 
-import ListingController from "../controllers/listing";
-import { upload, fileSizeLimitErrorHandler } from "../middlewares/multer";
-import verifyToken from "../middlewares/auth";
+import { createHotels, deleteHotel, getHotels, getSingleHotel, updateHotels} from '../controller/listing';
 
-router.post(
-    "/", 
-    verifyToken,
-    upload.single("image"),
-    fileSizeLimitErrorHandler,
-    ListingController.createListing
-);
 
-router.get("/", ListingController.getListings);
-
-router.get("/:id", ListingController.getListingById);
-
-router.put( "/:id", verifyToken, upload.single("image"), fileSizeLimitErrorHandler,ListingController.updateListing);
-
-router.delete("/:id", ListingController.deleteListings);
-
-//router.post("/:id/reviews", ListingController.rateListing);
-
-//router.get("/:user/listings", verifyToken, ListingController.getListingsByUser)
+/* GET hotel listing(routers). */
+router.post('/create', auth, createHotels);
+router.get('/read', getHotels);
+router.get("/read/:id", getSingleHotel);
+router.post("/update/:id", auth, updateHotels);
+router.delete('/delete/:id', auth, deleteHotel)
 
 export default router;

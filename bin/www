@@ -4,7 +4,7 @@
  * Module dependencies.
  */
 
-const app = require('./app').dafault;
+const app = require('../lib/app').default
 const debug = require('debug')('week-6-node-sq012-pod-i-tobbie91:server');
 const http = require('http');
 const {connection} = require("../database/mySqliteDB")
