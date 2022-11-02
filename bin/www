@@ -4,15 +4,16 @@
  * Module dependencies.
  */
 
-var app = require('../app');
-var debug = require('debug')('week5-009:server');
-var http = require('http');
+const app = require('./app').dafault;
+const debug = require('debug')('week-6-node-sq012-pod-i-tobbie91:server');
+const http = require('http');
+const {connection} = require("../database/mySqliteDB")
 
 /**
  * Get port from environment and store in Express.
  */
 
-var port = normalizePort(process.env.PORT || '3000');
+var port = normalizePort(process.env.PORT || '2022');
 app.set('port', port);
 
 /**
@@ -25,7 +26,17 @@ var server = http.createServer(app);
  * Listen on provided port, on all network interfaces.
  */
 
-server.listen(port);
+server.listen(port, async () => {
+  try {
+    let db = await connection();
+    if (db) {
+      console.log("Connected to the in-memory Sqlite database.")
+      }
+    }
+    catch (error){
+      console.log("Error connecting to the Sqlite database", error)
+    }
+});
 server.on('error', onError);
 server.on('listening', onListening);
 
