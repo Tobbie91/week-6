@@ -1,8 +1,18 @@
 import { Sequelize } from "sequelize";
 
-const db = new Sequelize ('app', '', '', {
-    storage: "./database.sqlite",
-    dialect: 'sqlite',
-    logging: false
-})
-export default db
+const sequelize = new Sequelize({
+	host: "localhost",
+	dialect: "sqlite",
+});
+
+const connection = async () => {
+	try {
+		await sequelize.authenticate();
+		console.log("Connection has been made successfully");
+		return true;
+	} catch (error) {
+		console.log("Unable to connect to the database", error);
+	}
+};
+
+export { sequelize, connection };

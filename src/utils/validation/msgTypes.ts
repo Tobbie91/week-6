@@ -1,6 +1,11 @@
 const MSG_TYPES = Object.freeze({
     ACCOUNT_CREATED: "Account successfully created",
     LOGGED_IN: "Successfully logged in",
+    PRODUCT_DELETED: "Product deleted successfully",
+    PRODUCT_UPDATED: "Product updated successfully",
+    PRODUCT_CREATED: "Product created successfully",
+    PRODUCTS_CREATED: "Product created successfully",
+    PRODUCT_FETCHED: "Product fetched successfully",
     DELETED: "Resource deleted successfully",
     UPDATED: "Resource updated successfully",
     CREATED: "Resource created successfully",
@@ -24,4 +29,4 @@ const MSG_TYPES = Object.freeze({
     WALLET_FUNDED: "Your wallet has been funded",
     NOT_ALLOWED: "This operation is not allowed"
 });
-export default {MSG_TYPES}
+export default MSG_TYPES

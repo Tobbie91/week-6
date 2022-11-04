@@ -1,15 +1,46 @@
-import express from 'express';
-import {auth} from "../middleware/auth"
+import express from "express";
 const router = express.Router();
 
-import { createHotels, deleteHotel, getHotels, getSingleHotel, updateHotels} from '../controller/listing';
+import * as ListingController from "../controllers/listing";
+const { upload, fileSizeLimitErrorHandler } = require("../middlewares/multer");
+import {verifyToken} from"../middlewares/auth";
 
+router.post(
+	"/",
+	verifyToken,
+	upload?.single("image"),
+	fileSizeLimitErrorHandler,
+	ListingController.createListing
+);
 
-/* GET hotel listing(routers). */
-router.post('/create', auth, createHotels);
-router.get('/read', getHotels);
-router.get("/read/:id", getSingleHotel);
-router.post("/update/:id", auth, updateHotels);
-router.delete('/delete/:id', auth, deleteHotel)
+router.get("/", ListingController.getListings);
+
+router.get("/:id", ListingController.getListingById);
+
+router.put(
+	"/:id",
+	verifyToken,
+	upload?.single("image"),
+	fileSizeLimitErrorHandler,
+	ListingController.updateListing
+);
+
+router.delete("/:id", verifyToken, ListingController.deleteListing);
+
+router.post("/:id/reviews", ListingController.rateListing);
+
+router.get("/:user/listings", verifyToken, ListingController.getListingsByUser);
 
 export default router;
+
+function single(
+	arg0: string
+): import("express-serve-static-core").RequestHandler<
+	{},
+	any,
+	any,
+	import("qs").ParsedQs,
+	Record<string, any>
+> {
+	throw new Error("Function not implemented.");
+}
