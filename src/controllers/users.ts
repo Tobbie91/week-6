@@ -2,6 +2,7 @@ import { Request, Response } from "express";
 import * as UserServices from "../services/users";
 import { validateUser, validateLogin } from "../utils/usersValidation";
 import MSG_TYPES from "../utils/validation/msgTypes";
+import * as ListingService from "../services/listing";
 
 export const signup = async (req: Request, res: Response) => {
 	try {
@@ -28,3 +29,18 @@ export const login = async (req: Request, res: Response) => {
 		res.status(error.statusCode || 500).json({ message: error.message });
 	}
 };
+export const home =  async (req: Request, res: Response) => {
+	try{
+		//const listings = await ListingService.getListings();
+		// console.log(products[0].dataValues)
+		res.render('index')
+		//res.status(200).json({ message: "User successfully created" });
+        return;
+	}catch(err){
+		//console.log(err)
+		console.log("hello")
+	}
+}
+export const loggin = (req: Request, res:Response) =>{
+	res.render('pages/login')
+}
