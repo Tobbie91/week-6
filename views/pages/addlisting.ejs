@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <%- include('../partials/head'); %>
+</head>
+
+<body class="body" style="background-color:#87A2FB; height: 200%; min-height: 100vh; display: flex; flex-direction:column;">
+  <%- include('../partials/header'); %>
+
+  <div class="container p-4 text-center">
+    <h1> Create Listing</h1>
+    <a href="/dashboard" class="btn btn-sm float-end" style="background-color: whitesmoke;">view listings</a>
+  </div>
+
+  <div class="container p-5 vh-100">
+    <form class="vh-100" action="/addlisting" method="POST"  enctype="multiple/form-data" style="width:50%; margin:0 auto" >
+        <!-- Name input -->
+        <div class="form-outline mb-4">
+            <input type="text" name="address" id="form4Example1" class="form-control" />
+            <label class="form-label" for="form4Example1">Hotel Name</label>
+          </div>
+
+        <div class="form-outline mb-4">
+          <input type="text" name="address" id="form4Example1" class="form-control" />
+          <label class="form-label" for="form4Example1">Address</label>
+        </div>
+      
+        <!--  input -->
+        <div class="form-outline mb-4">
+          <input type="text" name="price" id="form4Example2" class="form-control" />
+          <label class="form-label" for="form4Example2">Price</label>
+        </div>
+        <div class="form-outline mb-4">
+          <input type="text" name="numOfBeds" id="form4Example2" class="form-control" />
+          <label class="form-label" for="form4Example2">Number Of Beds</label>
+        </div>
+        <div class="form-outline mb-4">
+          <input type="text" name="numOfBaths" id="form4Example2" class="form-control" />
+          <label class="form-label" for="form4Example2">Number Of Baths</label>
+        </div>
+       
+      
+        <!-- Message input -->
+        <div class="form-outline mb-4">
+          <textarea class="form-control" name="description" id="form4Example3" rows="4"></textarea>
+          <label class="form-label" for="form4Example3">Description</label>
+        </div>
+
+        <!-- image -->
+        <div class="form-outline mb-4">
+            <input type="file" name="image" id="form4Example2" class="form-control" />
+            <label class="form-label" for="form4Example2"></label>
+          </div>
+      
+        <!-- Checkbox -->
+        <div class="form-check d-flex justify-content-center mb-4">
+          <input class="form-check-input me-2" type="checkbox" value="" id="form4Example4" checked />
+          <label class="form-check-label" for="form4Example4">
+            Send me a copy of this message
+          </label>
+        </div>
+      
+        <!-- Submit button -->
+        <button type="submit" class="btn btn-primary btn-block mb-4">Send</button>
+      </form>
+</div>
+
+<%= user %>
+
+<%- include('../partials/footer'); %>
+</body>
+</html>

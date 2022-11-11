@@ -3,6 +3,7 @@ import path from "path";
 import db from "../models";
 import HttpError from "../utils/httpError";
 import FILE_HOST  from "../config/env";
+import envsecret from "../config/env"
 
 export const createListing = async (data:any) =>{
 const {
@@ -83,7 +84,7 @@ export const deleteListing = async (id:Number, userId:string) => {
     const imagePath = path.join(
     __dirname, 
     "../public/", 
- listing.image.split(`${FILE_HOST}`)[1])
+ listing.image.split(`${envsecret.FILE_HOST}`)[1])
 
     fs.unlinkSync(imagePath);
     await listing.destroy();

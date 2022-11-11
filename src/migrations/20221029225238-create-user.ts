@@ -1,7 +1,7 @@
 'use strict';
 /** @type {import('sequelize-cli').Migration} */
 exports = {
-  async up(queryInterface, Sequelize) {
+  async up(queryInterface:any, Sequelize:any) {
     await queryInterface.createTable('Users', {
       id: {
         allowNull: false,
@@ -32,7 +32,7 @@ exports = {
       }
     });
   },
-  async down(queryInterface, Sequelize) {
+  async down(queryInterface:any, Sequelize:any) {
     await queryInterface.dropTable('Users');
   }
 };

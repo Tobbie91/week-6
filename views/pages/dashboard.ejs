@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <%- include('../partials/head'); %>
+</head>
+
+<body class="body" style="background-color:#87A2FB; height: 200%; min-height: 100vh; display: flex; flex-direction:column;">
+  <%- include('../partials/header'); %>
+
+<!-- Background image -->
+ 
+<section class="vh-100" style=" background-color: #87A2FB">
+<div class="container p-5 text-center">
+    <h1> Listing Table</h1>
+</div>
+
+    <div class="container text-center w-8 vh-100">
+        <a href="/addlisting" class="btn-sm btn-primary float-end" > Add Listing</a>
+        <div class="row align-items-start">
+         
+            <table class="table table-success table-striped">
+                <thead>
+                    <tr>
+                      <th scope="col">#</th>
+                      <th scope="col">Image</th>
+                      <th scope="col">Listing</th>
+                      <th scope="col">Price</th>
+                      <th scope="col">Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <% listings.map(function(listing, ind){ %>
+                    <tr>
+                      <th scope="row"><%= ind + 1 %></th>
+                      <td><img src="<%=`${listing.image}`%>" width="75px" alt=""></td>
+                      <td><%=`${listing.name}`%></td>
+                      <td><%=`${listing.price}`%></td>
+                      <td>
+                        <a href="/edit/<%= listing.id %>"><i style="color: yellow;" class="fa-solid fa-pen p-2">Edit</i></a>
+                        <form method="POST" action="/product/<%= product.id %>?_method=DELETE">
+                          <button type="submit" style="border: none; background: none;">  
+                            <i style="color: red;" class="fa-solid fa-trash fa-danger p-2"> Delete</i>
+                          </button>
+                        </form>
+                      </td>
+                    </tr>
+                    <% }) %>
+                  </tbody>
+              </table>
+        </div>
+    </div>
+</section>
+
+<%- include('../partials/footer'); %>
+</body>
+</html>
+
+    
+   
+   
