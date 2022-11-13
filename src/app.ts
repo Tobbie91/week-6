@@ -59,7 +59,7 @@ app.use(function (_req: Request, _res: Response, next: NextFunction) {
   
 	// render the error page
 	res.status(err.status || 500);
-	res.json({ error: "couldn't access page, please retry again" });
+	res.render( "error" );
   });
 
 module.exports = app;

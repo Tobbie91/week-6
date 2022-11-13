@@ -27,7 +27,7 @@ export const createListing = async (req: any, res: any) => {
 export const getListingsForDasboard = async (req: Request, res: Response) => {
 	try {
 		const listings = await ListingService.getListingsByUser(res.locals?.user?.id);
-		res.status(200).render('dashboard', {listings});
+		res.status(200).render('pages/dashboard', {listings});
 	} catch (error: any) {
 		res.status(error.statusCode || 500).json({ message: error.message });
 	}
@@ -54,9 +54,8 @@ export const getListingById = async (req: any, res: any) => {
 
 export const getListingByIdForEdit = async (req: any, res: any) => {
 	try {
-		const listing = await ListingService.getListingById(req.params.id);
-		res.status(200).render('editlisting', {section:listing});
-		// res.status(200).json({ message: MSG_TYPES.PRODUCT_FOUND, listing });
+		const listing = await ListingService.getListingById(+req.params.id);
+		res.status(200).render('pages/edit', {listing});
 	} catch (error: any) {
 		res.status(error.statusCode || 500).json({ message: error.message });
 	}
@@ -68,8 +67,6 @@ export const updateListing = async (req: any, res: any) => {
 		if (error) {
 			return res.status(400).json({ message: error.details[0].message });
 		}
-		// console.log(req.body);
-		// console.log(req.file);
 		const filepath = req.file.path.split("public")[1];
 		const listing = await ListingService.updateListing(req.params.id, {
 			...req.body,
@@ -84,15 +81,12 @@ export const updateListing = async (req: any, res: any) => {
 
 export const deleteListing = async (req: any, res: any) => {
 	try {
-		// console.log(req.params.id, req.user.id);
 		const listing = await ListingService.deleteListing(
 			req.params.id,
 			res.locals?.user?.id
-			// req.user.id
 		);
-		res.status(301).redirect('/dasboard');
+		res.status(301).redirect('/dashboard');
 	} catch (error: any) {
-		console.log(error);
 		res.status(error.statusCode || 500).json({ message: error.message });
 	}
 };
@@ -117,4 +111,3 @@ export const getListingsByUser = async (req: any, res: any) => {
 	}
 };
 
-//export {createProduct,  getProducts, getProductById, updateProduct, deleteProduct, rateProduct, getProductsByUser }

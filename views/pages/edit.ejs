@@ -8,8 +8,8 @@
   <%- include('../partials/header'); %>
 
   <div class="container p-4 text-center">
-    <h1> Create Listing</h1>
-    <a href="dashboard" class="btn btn-sm float-end" style="background: whitesmoke;">view listings</a>
+    <h1> Edit Listing</h1>
+    <a href="/dashboard" class="btn btn-sm float-end" style="background: whitesmoke;">view listings</a>
   </div>
 <div class="container p-5">
     <form class="vh-100" action="/addlisting/<%= listing.id %>?_method=PUT" method="POST" enctype="multipart/form-data" style="width:50%; margin:0 auto" >
@@ -26,22 +26,22 @@
       
         <!--  input -->
         <div class="form-outline mb-4">
-          <input type="text" name="price" id="form4Example2" class="form-control" />
+          <input type="text" name="price" value="<%= listing.price %>" id="form4Example2" class="form-control" />
           <label class="form-label" for="form4Example2">Price</label>
         </div>
         <div class="form-outline mb-4">
-          <input type="text" name="numOfBeds" id="form4Example2" class="form-control" />
+          <input type="text" name="numOfBeds" value="<%= listing.numOfBeds %>" id="form4Example2" class="form-control" />
           <label class="form-label" for="form4Example2">Number Of Beds</label>
         </div>
         <div class="form-outline mb-4">
-          <input type="text" name="numOfBaths" id="form4Example2" class="form-control" />
+          <input type="text" name="numOfBaths" value="<%= listing.numOfBaths %>" id="form4Example2" class="form-control" />
           <label class="form-label" for="form4Example2">Number Of Baths</label>
         </div>
        
       
         <!-- Message input -->
         <div class="form-outline mb-4">
-          <textarea class="form-control" name="description" id="form4Example3" rows="4"></textarea>
+          <textarea class="form-control" name="description" value="<%= listing.description %>" id="form4Example3" rows="4"></textarea>
           <label class="form-label" for="form4Example3">Description</label>
         </div>
 
@@ -63,6 +63,12 @@
         <button type="submit" class="btn btn-primary btn-block mb-4">Send</button>
       </form>
 </div>
+<% const user_data = locals.user%>
+      <% console.log(user_data)%>
+      <script>
+        const userData = "<%- user_data %>"
+        console.log(userData)
+      </script>
 
 <%- include('../partials/footer'); %>
 </body>

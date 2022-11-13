@@ -17,17 +17,11 @@ export async function verifyToken(req: Request, res: Response, next:NextFunction
     }
         try {
            const decoded = jwt.verify(token, process.env.JWT_SECRET as string) as JwtPayload;
-           // const  token = req.headers.authorization.split(" ")[1];
-            //console.log("decoded", decoded);
             const user = await db.User.findOne({ where: { id: decoded?.id}})
             res.locals.user = user
-            // console.log(user)
-            //req.user = user;
             next();
         } catch (error) {
-            //console.log(error)
-            //res.status(400).send("Invalid token");
-            res.status(400).render('login', { message: "You are Not logged in"})
+            res.status(400).render('pages/login', { message: "You are Not logged in"})
         }
 
     }

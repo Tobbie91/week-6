@@ -5,6 +5,7 @@ import * as UserServices from "../services/users";
 import { validateUser, validateLogin } from "../utils/usersValidation";
 import MSG_TYPES from "../utils/validation/msgTypes";
 import * as ListingService from "../services/listing";
+import { NextFunction } from "express-serve-static-core";
 // import { verifyToken } from "../middlewares/auth";
 
 declare module 'express-session' {
@@ -34,9 +35,7 @@ export const login = async (req: Request, res: Response) => {
 			return res.status(400).json({ message: error.details[0].message });
 		}
 		const user = await UserServices.login(req.body);
-		const listings = await ListingService.getListingsByUser(
-			user.id
-		)
+		const listings = await ListingService.getListingsByUser(user.id);
 		
 		req.session.regenerate(function(err){
 			if (err) throw new Error(err)
@@ -57,7 +56,6 @@ export const login = async (req: Request, res: Response) => {
 export const home =  async (req: Request, res: Response) => {
 	try{
 		const listings = await ListingService.getListings();
-		//console.log(products[0].dataValues)
 		res.render('pages/index', {listings});
 	}catch(err){
 		console.log(err)
@@ -73,8 +71,7 @@ export const signup = (req: Request, res:Response) =>{
 
 export const show =  async (req: Request, res: Response) => {
 		try{
-			const listings = await ListingService.getListings();
-			//console.log(products[0].dataValues)
+			const listings = await ListingService.getListingById(+req.params.id);
 			res.render('pages/show', {listings});
 		}catch(err){
 			console.log(err)
@@ -91,7 +88,17 @@ export const addlisting = (req: Request, res:Response) =>{
 	res.render('pages/addlisting')
 
 }
-export const edit = (req: Request, res:Response) =>{
-	res.render('pages/edit/:id')
+// export const edit = (req: Request, res:Response) =>{
+// 	res.render('pages/edit/:id')
 
+// }
+export const logout = function(req:Request, res:Response, next:NextFunction){
+	req.session.user = null;
+	req.session.save(function(err){
+		if (err) next (err)
+		req.session.regenerate(function(err){
+			if(err) next(err)
+			res.redirect('/')
+		})
+	})
 }

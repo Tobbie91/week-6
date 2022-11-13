@@ -2,7 +2,6 @@ import fs from "fs";
 import path from "path";
 import db from "../models";
 import HttpError from "../utils/httpError";
-import FILE_HOST  from "../config/env";
 import envsecret from "../config/env"
 
 export const createListing = async (data:any) =>{
@@ -74,7 +73,7 @@ export const updateListing = async(id:Number, data:any)=> {
 }
 
 export const deleteListing = async (id:Number, userId:string) => {
-    const listing = await db.Product.findByPk(id)
+    const listing = await db.Listing.findByPk(id)
     if(!listing){
         throw new HttpError("Hotel not found", 404)
     }
@@ -97,12 +96,12 @@ export const rateListing = async (id:Number, data:any) => {
         throw new HttpError("Listing not found", 404);
     }
     const { rating, } = data;
-    listing.rating = (rating + listing.rating) 
-    // if(product.numReviews){
-    //     product.numReviews += 1
-    // }else{
-    //     product.numReviews = 1
-    // }
+    listing.rating = (rating + listing.rating) / (listing.numReviews+1)
+    if(listing.numReviews){
+        listing.numReviews += 1
+    }else{
+        listing.numReviews = 1
+    }
     await listing.save();
     return listing;
 }
@@ -115,4 +114,3 @@ export const getListingsByUser = async (id:Number) => {
     })
     return listings;
 }
-//export default {createProduct,  getProducts, getProductById, updateProduct, deleteProduct, rateProduct,getProductsByUser }
